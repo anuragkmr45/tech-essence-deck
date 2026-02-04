@@ -49,95 +49,84 @@ const Projects = () => {
         <div className="h-1 w-16 bg-primary rounded-full" />
       </div>
 
-      {/* Featured Projects */}
-      <div className="mb-16 space-y-12">
-        {featuredProjects.map((project, index) => (
-          <div
-            key={`featured-${index}`}
-            ref={setRef(`featured-${index}`)}
-            data-id={`featured-${index}`}
-            className={`group relative transition-all duration-700 ${
-              visibleItems.has(`featured-${index}`)
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-            style={{ transitionDelay: `${index * 100}ms` }}
-          >
-            <div className="grid gap-6 md:grid-cols-2 bg-secondary/30 rounded-xl p-6 hover:bg-secondary/50 transition-colors">
-              {/* Left - Preview */}
-              <div
-                className={`transition-all duration-700 ${
-                  visibleItems.has(`featured-${index}`)
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 -translate-x-8"
-                }`}
-                style={{ transitionDelay: `${index * 100 + 100}ms` }}
-              >
-                <ProjectCard
-                  preview={project.preview}
-                  title={project.title}
-                  github={project.github}
-                  demo={project.demo}
-                />
-              </div>
+      {/* Timeline line */}
+      <div className="relative">
+        <div className="absolute left-0 md:left-1/3 top-0 bottom-0 w-px bg-secondary ml-3 md:ml-0 hidden md:block" />
 
-              {/* Right - Details */}
-              <div className="flex flex-col justify-center">
-                <div className="flex items-start justify-between mb-2">
-                  <span className="text-5xl font-bold text-primary/20">
+        {/* Featured Projects */}
+        <div className="space-y-16 md:space-y-0 mb-16">
+          {featuredProjects.map((project, index) => (
+            <div
+              key={`featured-${index}`}
+              ref={setRef(`featured-${index}`)}
+              data-id={`featured-${index}`}
+              className={`relative md:grid md:grid-cols-3 md:gap-8 transition-all duration-700 mb-12 ${
+                visibleItems.has(`featured-${index}`)
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              {/* Left Side - Sticky Info */}
+              <div className="md:sticky md:top-24 md:self-start md:pr-8 md:text-right mb-6 md:mb-0">
+                {/* Timeline dot */}
+                <div className="absolute left-0 md:left-1/3 w-7 h-7 -ml-0.5 md:-ml-3.5 rounded-full bg-background border-2 border-primary flex items-center justify-center z-10 hidden md:flex">
+                  <span className="text-xs font-bold text-primary">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
 
-                <h3>
+                {/* Project Number - Mobile */}
+                <span className="md:hidden text-4xl font-bold text-primary/20 mb-2 block">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                {/* Title */}
+                <h3 className="text-xl font-bold text-foreground mb-2">
                   <a
-                    href={project.github}
+                    href={project.github !== "#" ? project.github : project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xl font-bold text-foreground hover:text-primary transition-colors"
+                    className="hover:text-primary transition-colors inline-flex items-center gap-1 md:flex-row-reverse"
                   >
-                    {project.title}
                     <ArrowUpRight className="h-5 w-5" />
+                    {project.title}
                   </a>
                 </h3>
 
-                <p className="text-xs text-primary font-medium uppercase tracking-wider mt-1">
+                {/* Role */}
+                <p className="text-xs text-primary font-medium uppercase tracking-wider mb-4">
                   {project.role}
                 </p>
 
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {project.description}
-                </p>
+                {/* Preview Media */}
+                <div
+                  className={`transition-all duration-700 ${
+                    visibleItems.has(`featured-${index}`)
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95"
+                  }`}
+                  style={{ transitionDelay: `${index * 100 + 150}ms` }}
+                >
+                  <ProjectCard
+                    preview={project.preview}
+                    title={project.title}
+                    github={project.github}
+                    demo={project.demo}
+                  />
+                </div>
 
-                <ul className="mt-4 space-y-2">
-                  {project.highlights.map((highlight, hIndex) => (
-                    <li
-                      key={hIndex}
-                      className={`text-sm text-muted-foreground flex gap-2 transition-all duration-500 ${
-                        visibleItems.has(`featured-${index}`)
-                          ? "opacity-100 translate-x-0"
-                          : "opacity-0 -translate-x-4"
-                      }`}
-                      style={{
-                        transitionDelay: `${index * 100 + hIndex * 75 + 200}ms`,
-                      }}
-                    >
-                      <span className="text-primary mt-0.5">▹</span>
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-4 flex items-center gap-4">
+                {/* Links */}
+                <div className="mt-4 flex items-center gap-3 md:justify-end">
                   {project.github !== "#" && (
                     <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                      aria-label="GitHub repository"
+                      className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
-                      <Github className="h-5 w-5" />
+                      <Github className="h-4 w-4" />
+                      <span className="hidden sm:inline">Code</span>
                     </a>
                   )}
                   {project.demo !== "#" && (
@@ -145,25 +134,56 @@ const Projects = () => {
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                      aria-label="Live demo"
+                      className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
-                      <ExternalLink className="h-5 w-5" />
+                      <ExternalLink className="h-4 w-4" />
+                      <span className="hidden sm:inline">Demo</span>
                     </a>
                   )}
                 </div>
+              </div>
 
-                <ul className="mt-4 flex flex-wrap gap-2" aria-label="Technologies used">
-                  {project.technologies.map((tech) => (
-                    <li key={tech}>
-                      <span className="tech-badge">{tech}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* Right Side - Details */}
+              <div className="md:col-span-2 md:pl-8 md:border-l border-secondary/50">
+                <div className="bg-secondary/30 rounded-lg p-5 hover:bg-secondary/50 transition-colors">
+                  {/* Description */}
+                  <p className="text-sm leading-relaxed text-muted-foreground mb-5">
+                    {project.description}
+                  </p>
+
+                  {/* Bullet Points */}
+                  <ul className="space-y-3 mb-5">
+                    {project.highlights.map((highlight, hIndex) => (
+                      <li
+                        key={hIndex}
+                        className={`text-sm text-muted-foreground flex gap-3 transition-all duration-500 ${
+                          visibleItems.has(`featured-${index}`)
+                            ? "opacity-100 translate-x-0"
+                            : "opacity-0 -translate-x-4"
+                        }`}
+                        style={{
+                          transitionDelay: `${index * 100 + hIndex * 75 + 200}ms`,
+                        }}
+                      >
+                        <span className="text-primary mt-0.5">▹</span>
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Technologies */}
+                  <ul className="flex flex-wrap gap-2" aria-label="Technologies used">
+                    {project.technologies.map((tech) => (
+                      <li key={tech}>
+                        <span className="tech-badge">{tech}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* NPM Packages */}
