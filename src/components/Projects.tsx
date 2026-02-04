@@ -1,5 +1,6 @@
 import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import { projects, npmPackages } from "@/data/portfolio";
+import ProjectCard from "./ProjectCard";
 
 const Projects = () => {
   const featuredProjects = projects.filter((p) => p.featured);
@@ -47,6 +48,16 @@ const Projects = () => {
                 <p className="mt-2 text-sm leading-normal text-muted-foreground">
                   {project.description}
                 </p>
+
+                {/* Project Preview */}
+                <div className="mt-4">
+                  <ProjectCard
+                    preview={project.preview}
+                    title={project.title}
+                    github={project.github}
+                    demo={project.demo}
+                  />
+                </div>
 
                 <ul className="mt-3 space-y-1">
                   {project.highlights.map((highlight, hIndex) => (
@@ -165,7 +176,18 @@ const Projects = () => {
                   </a>
                 </h4>
                 <p className="text-xs text-primary mt-0.5">{project.role}</p>
-                <p className="mt-2 text-sm text-muted-foreground">
+                
+                {/* Project Preview for Other Projects */}
+                <div className="mt-3">
+                  <ProjectCard
+                    preview={project.preview}
+                    title={project.title}
+                    github={project.github}
+                    demo={project.demo}
+                  />
+                </div>
+                
+                <p className="mt-3 text-sm text-muted-foreground">
                   {project.description}
                 </p>
                 <ul className="mt-3 flex flex-wrap gap-2">
