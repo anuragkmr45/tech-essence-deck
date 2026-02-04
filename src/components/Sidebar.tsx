@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, FileText } from "lucide-react";
 import { personalInfo, navItems } from "@/data/portfolio";
+import FlipCard from "./FlipCard";
+import { Button } from "./ui/button";
 
 const Sidebar = () => {
   const [activeSection, setActiveSection] = useState("about");
@@ -36,6 +38,11 @@ const Sidebar = () => {
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24 lg:px-12">
       <div>
+        {/* Profile Image with Flip Animation */}
+        <div className="mb-8 animate-fade-in">
+          <FlipCard />
+        </div>
+
         {/* Name and Title */}
         <div className="mb-4">
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
@@ -49,6 +56,25 @@ const Sidebar = () => {
           <p className="mt-4 max-w-xs leading-relaxed text-muted-foreground">
             {personalInfo.tagline}
           </p>
+        </div>
+
+        {/* View Resume Button */}
+        <div className="mt-6 mb-8">
+          <Button
+            asChild
+            variant="outline"
+            className="group border-primary/50 hover:border-primary hover:bg-primary/10"
+          >
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
+            >
+              <FileText className="h-4 w-4 text-primary" />
+              <span>View Resume</span>
+            </a>
+          </Button>
         </div>
 
         {/* Navigation */}
