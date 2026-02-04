@@ -205,13 +205,11 @@ const Projects = () => {
 
       <div className="mt-12">
         <a
-          href="https://github.com/anuragkmr45"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/projects"
           className="inline-flex items-center font-medium leading-tight text-foreground group"
         >
           <span className="border-b border-transparent pb-px transition hover:border-primary group-hover:border-primary">
-            View All Projects on GitHub
+            View All Projects
           </span>
           <ArrowUpRight className="ml-1 h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
         </a>
