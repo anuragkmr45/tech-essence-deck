@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: "Anurag Kumar",
-  role: "Full-Stack & Mobile Engineer",
+  role: "Engineer",
   tagline: "I build secure, performant, and delightful digital products.",
   email: "anuragkmr45@gmail.com",
   github: "https://github.com/anuragkmr45",
