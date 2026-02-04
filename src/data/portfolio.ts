@@ -76,6 +76,7 @@ export const projects = [
     ],
     github: "#",
     demo: "#",
+    preview: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
     featured: true,
   },
   {
@@ -90,6 +91,7 @@ export const projects = [
     ],
     github: "#",
     demo: "#",
+    preview: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop",
     featured: true,
   },
   {
@@ -104,6 +106,7 @@ export const projects = [
     ],
     github: "https://github.com/anuragkmr45/VidChat",
     demo: "#",
+    preview: "https://images.unsplash.com/photo-1516387938699-a93567ec168e?w=600&h=400&fit=crop",
     featured: false,
   },
   {
@@ -118,6 +121,7 @@ export const projects = [
     ],
     github: "https://github.com/anuragkmr45/magic-notes",
     demo: "#",
+    preview: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=600&h=400&fit=crop",
     featured: false,
   },
 ];
