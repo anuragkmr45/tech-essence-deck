@@ -1,8 +1,9 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Search, ArrowLeft, Github, ExternalLink, Play } from "lucide-react";
+import { Search, ArrowLeft, Github, ExternalLink, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { allProjects } from "@/data/allProjects";
+import { projectTitleToSlug, projectDetails } from "@/data/projectDetails";
 import { personalInfo } from "@/data/portfolio";
 import { Input } from "@/components/ui/input";
 import SpotlightEffect from "@/components/SpotlightEffect";
@@ -15,8 +16,8 @@ const categories = [
   { id: "ai", label: "AI" },
   { id: "blockchain", label: "Blockchain" },
   { id: "dev-tools", label: "Dev Tools" },
-  { id: "desktop", label: "Desktop Apps" },
-  { id: "mobile", label: "Mobile Apps" },
+  { id: "desktop", label: "Desktop" },
+  { id: "mobile", label: "Mobile" },
   { id: "other", label: "Other" },
 ];
 
@@ -38,6 +39,24 @@ const AllProjects = () => {
       return matchesCategory && matchesSearch;
     });
   }, [activeCategory, searchQuery]);
+
+  // Get slug for project if it has a detail page
+  const getProjectSlug = (title: string): string | null => {
+    const slug = projectTitleToSlug[title];
+    if (slug && projectDetails[slug]) {
+      return slug;
+    }
+    return null;
+  };
+
+  // Get status from project details
+  const getProjectStatus = (title: string): "live" | "in-progress" | "archived" | null => {
+    const slug = projectTitleToSlug[title];
+    if (slug && projectDetails[slug]) {
+      return projectDetails[slug].status;
+    }
+    return null;
+  };
 
   return (
     <>
@@ -67,7 +86,7 @@ const AllProjects = () => {
           {/* Header */}
           <div className="mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">
-              All Projects
+              Projects
             </h1>
             <p className="text-muted-foreground max-w-2xl">
               A collection of projects I've built, contributed to, or am
@@ -91,122 +110,176 @@ const AllProjects = () => {
           {/* Category Tabs */}
           <div className="mb-10 overflow-x-auto scrollbar-hide">
             <div className="flex gap-2 pb-2">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
-                  className={`
-                    relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
-                    ${
-                      activeCategory === category.id
-                        ? "text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }
-                  `}
-                >
-                  {/* Animated Background */}
-                  {activeCategory === category.id && (
+              {categories.map((category) => {
+                const count = category.id === "all" 
+                  ? allProjects.length 
+                  : allProjects.filter(p => p.category === category.id).length;
+                
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`
+                      relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2
+                      ${
+                        activeCategory === category.id
+                          ? "text-primary-foreground"
+                          : "text-muted-foreground hover:text-foreground"
+                      }
+                    `}
+                  >
+                    {/* Animated Background */}
+                    {activeCategory === category.id && (
+                      <span
+                        className="absolute inset-0 bg-primary rounded-full animate-scale-in"
+                        style={{ zIndex: -1 }}
+                      />
+                    )}
+                    {activeCategory !== category.id && (
+                      <span
+                        className="absolute inset-0 bg-secondary/50 rounded-full opacity-0 hover:opacity-100 transition-opacity"
+                        style={{ zIndex: -1 }}
+                      />
+                    )}
+                    {category.label}
                     <span
-                      className="absolute inset-0 bg-primary rounded-full animate-scale-in"
-                      style={{ zIndex: -1 }}
-                    />
-                  )}
-                  {activeCategory !== category.id && (
-                    <span
-                      className="absolute inset-0 bg-secondary/50 rounded-full opacity-0 hover:opacity-100 transition-opacity"
-                      style={{ zIndex: -1 }}
-                    />
-                  )}
-                  {category.label}
-                </button>
-              ))}
+                      className={`text-xs px-1.5 py-0.5 rounded-full ${
+                        activeCategory === category.id
+                          ? "bg-primary-foreground/20"
+                          : "bg-secondary"
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* Projects Grid */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredProjects.map((project, index) => (
-              <div
-                key={project.title}
-                className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300 animate-fade-in"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                {/* Preview Image */}
-                <div className="relative aspect-video overflow-hidden">
-                  <img
-                    src={project.preview}
-                    alt={`${project.title} preview`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  {/* Overlay on Hover */}
-                  <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3">
-                    {project.demo !== "#" && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 hover:scale-110"
-                        aria-label="Play demo"
-                      >
-                        <Play className="h-5 w-5 ml-0.5" fill="currentColor" />
-                      </a>
-                    )}
-                    {project.github !== "#" && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary text-foreground hover:bg-secondary/80 transition-all duration-200 hover:scale-110"
-                        aria-label="View on GitHub"
-                      >
-                        <Github className="h-4 w-4" />
-                      </a>
-                    )}
-                    {project.demo !== "#" && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary text-foreground hover:bg-secondary/80 transition-all duration-200 hover:scale-110"
-                        aria-label="Open live demo"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    )}
-                  </div>
-                </div>
+            {filteredProjects.map((project, index) => {
+              const slug = getProjectSlug(project.title);
+              const status = getProjectStatus(project.title);
+              const hasDetailPage = !!slug;
 
-                {/* Content */}
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary capitalize shrink-0">
-                      {project.category.replace("-", " ")}
-                    </span>
+              const CardContent = (
+                <>
+                  {/* Preview Image */}
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      src={project.preview}
+                      alt={`${project.title} preview`}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+                    
+                    {/* Status Badge */}
+                    {status && (
+                      <div className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-medium ${
+                        status === "live"
+                          ? "bg-primary/90 text-primary-foreground"
+                          : "bg-yellow-500/90 text-yellow-950"
+                      }`}>
+                        {status === "live" ? "Live" : "In Progress"}
+                      </div>
+                    )}
+
+                    {/* Quick Action Icons */}
+                    <div className="absolute top-3 right-3 flex gap-2">
+                      {project.github !== "#" && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-full bg-background/80 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                          aria-label="View on GitHub"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Github className="h-4 w-4" />
+                        </a>
+                      )}
+                      {project.demo !== "#" && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-full bg-background/80 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                          aria-label="Open live demo"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs px-2 py-0.5 rounded bg-secondary/80 text-muted-foreground"
-                      >
-                        {tech}
+
+                  {/* Content */}
+                  <div className="p-5">
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                        {project.title}
+                      </h3>
+                      <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary capitalize shrink-0">
+                        {project.category.replace("-", " ")}
                       </span>
-                    ))}
-                    {project.technologies.length > 4 && (
-                      <span className="text-xs px-2 py-0.5 rounded bg-secondary/80 text-muted-foreground">
-                        +{project.technologies.length - 4}
+                    </div>
+                    <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+                      {project.description}
+                    </p>
+                    
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-xs px-2 py-0.5 rounded bg-secondary/80 text-muted-foreground"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 4 && (
+                        <span className="text-xs px-2 py-0.5 rounded bg-secondary/80 text-muted-foreground">
+                          +{project.technologies.length - 4}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* View Project Link */}
+                    {hasDetailPage && (
+                      <span className="inline-flex items-center gap-1.5 text-sm text-primary group-hover:text-primary/80 transition-colors">
+                        View project
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                       </span>
                     )}
                   </div>
+                </>
+              );
+
+              if (hasDetailPage) {
+                return (
+                  <Link
+                    key={project.title}
+                    to={`/projects/${slug}`}
+                    className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300 animate-fade-in block"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    {CardContent}
+                  </Link>
+                );
+              }
+
+              return (
+                <div
+                  key={project.title}
+                  className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300 animate-fade-in"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  {CardContent}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* No Results */}
