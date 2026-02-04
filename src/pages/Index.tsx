@@ -7,6 +7,7 @@ import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SpotlightEffect from "@/components/SpotlightEffect";
+import CustomCursor from "@/components/CustomCursor";
 import { Helmet } from "react-helmet-async";
 import { personalInfo } from "@/data/portfolio";
 
@@ -24,7 +25,10 @@ const Index = () => {
         <meta name="twitter:description" content={personalInfo.tagline} />
       </Helmet>
 
-      <div className="relative min-h-screen bg-background">
+      <div className="relative min-h-screen bg-background cursor-none">
+        {/* Custom illustrated cursor */}
+        <CustomCursor />
+
         {/* Spotlight effect */}
         <SpotlightEffect />
 
