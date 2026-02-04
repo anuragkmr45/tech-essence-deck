@@ -2,12 +2,21 @@ import { useState } from "react";
 import illustrationImg from "@/assets/anurag-illustration.png";
 import photoImg from "@/assets/anurag-photo.png";
 
-const FlipCard = () => {
+interface FlipCardProps {
+  size?: "default" | "inline";
+}
+
+const FlipCard = ({ size = "default" }: FlipCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
+
+  const sizeClasses = {
+    default: "w-32 h-32",
+    inline: "w-12 h-12 md:w-14 md:h-14",
+  };
 
   return (
     <div
-      className="relative w-32 h-32 cursor-pointer perspective-1000 group"
+      className={`relative cursor-pointer perspective-1000 group ${sizeClasses[size]}`}
       onClick={() => setIsFlipped(!isFlipped)}
       role="button"
       aria-label="Click to flip between illustration and photo"
@@ -43,10 +52,12 @@ const FlipCard = () => {
         </div>
       </div>
 
-      {/* Hint text */}
-      <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-        {isFlipped ? "Click to flip back" : "Click me!"}
-      </span>
+      {/* Hint text - only show on default size */}
+      {size === "default" && (
+        <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+          {isFlipped ? "Click to flip back" : "Click me!"}
+        </span>
+      )}
     </div>
   );
 };
