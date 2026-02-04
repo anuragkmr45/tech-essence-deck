@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import AllProjects from "./pages/AllProjects";
 import AllWritings from "./pages/AllWritings";
+import CaseStudyDetail from "./pages/CaseStudyDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/projects" element={<AllProjects />} />
             <Route path="/writings" element={<AllWritings />} />
+            <Route path="/case-study/:id" element={<CaseStudyDetail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
