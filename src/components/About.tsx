@@ -11,46 +11,40 @@ const About = () => {
         </h2>
       </div>
 
-      <div className="space-y-4">
-        <p className="text-muted-foreground leading-relaxed">
-          <span className="text-foreground">Back in 2021</span>, my journey started with a curiosity about how systems work under the hood, which evolved into a deep interest in real-time applications, offline-first architectures, and developer tooling.
-        </p>
+      <ul className="space-y-3 list-none">
+        <li className="flex items-start gap-3 text-muted-foreground leading-relaxed">
+          <span className="text-primary mt-1.5">▹</span>
+          <span><span className="text-foreground">Back in 2021</span>, my journey started with a curiosity about how systems work under the hood — now I specialize in real-time applications, offline-first architectures, and developer tooling.</span>
+        </li>
 
-        <p className="text-muted-foreground leading-relaxed">
-          Currently, I'm working as a Founding Engineer at{" "}
-          <span className="text-foreground font-medium">Hexmon Technology</span>, where I architect and build enterprise-grade systems using Next.js, TypeScript, and PostgreSQL. I focus heavily on security—from{" "}
-          <span className="text-foreground font-medium">rate limiting</span> and{" "}
-          <span className="text-foreground font-medium">CSRF protection</span> to{" "}
-          <span className="text-foreground font-medium">role-based access control</span> and cryptographic implementations.
-        </p>
+        <li className="flex items-start gap-3 text-muted-foreground leading-relaxed">
+          <span className="text-primary mt-1.5">▹</span>
+          <span>Currently working as a <span className="text-foreground font-medium">Founding Engineer at Hexmon Technology</span>, architecting enterprise-grade systems with Next.js, TypeScript, and PostgreSQL.</span>
+        </li>
 
-        <p className="text-muted-foreground leading-relaxed">
-          My main focus these days is building secure, scalable products at{" "}
-          <a
-            href="#experience"
-            className="text-foreground font-medium link-underline"
-          >
-            Hexmon Technology
-          </a>
-          . I most enjoy building software in the sweet spot where{" "}
-          <span className="text-foreground">security meets user experience</span>
-          —creating systems that are both robust and delightful to use.
-        </p>
+        <li className="flex items-start gap-3 text-muted-foreground leading-relaxed">
+          <span className="text-primary mt-1.5">▹</span>
+          <span>Focus heavily on security — <span className="text-foreground font-medium">rate limiting</span>, <span className="text-foreground font-medium">CSRF protection</span>, <span className="text-foreground font-medium">RBAC</span>, and cryptographic implementations.</span>
+        </li>
 
-        <p className="text-muted-foreground leading-relaxed">
-          When I'm not at the computer, I'm usually exploring new{" "}
-          <span className="text-foreground font-medium">AI tools</span>, contributing to{" "}
-          <a
-            href="https://github.com/anuragkmr45"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-foreground font-medium link-underline"
-          >
-            open-source projects
-          </a>
-          , or diving deep into system design patterns.
-        </p>
-      </div>
+        <li className="flex items-start gap-3 text-muted-foreground leading-relaxed">
+          <span className="text-primary mt-1.5">▹</span>
+          <span>Building software where <span className="text-foreground">security meets user experience</span> — creating systems that are both robust and delightful to use.</span>
+        </li>
+
+        <li className="flex items-start gap-3 text-muted-foreground leading-relaxed">
+          <span className="text-primary mt-1.5">▹</span>
+          <span>When I'm not coding, I'm exploring <span className="text-foreground font-medium">AI tools</span>, contributing to{" "}
+            <a
+              href="https://github.com/anuragkmr45"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground font-medium link-underline"
+            >
+              open-source projects
+            </a>, or diving deep into system design patterns.</span>
+        </li>
+      </ul>
     </section>
   );
 };
