@@ -52,7 +52,7 @@ const AllWritings = () => {
         />
       </Helmet>
 
-      <div className="relative min-h-screen cursor-none">
+      <div className="relative min-h-screen cursor-none pt-16">
         <CustomCursor />
         <SpotlightEffect />
 

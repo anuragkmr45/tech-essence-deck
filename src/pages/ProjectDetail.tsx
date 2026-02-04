@@ -97,7 +97,7 @@ const ProjectDetailPage = () => {
         <meta name="description" content={project.summary} />
       </Helmet>
 
-      <div className="relative min-h-screen cursor-none">
+      <div className="relative min-h-screen cursor-none pt-16">
         <CustomCursor />
         <SpotlightEffect />
 

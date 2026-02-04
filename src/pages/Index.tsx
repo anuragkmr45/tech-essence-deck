@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
@@ -27,15 +26,12 @@ const Index = () => {
         <meta name="twitter:description" content={personalInfo.tagline} />
       </Helmet>
 
-      <div className="relative min-h-screen bg-background cursor-none">
+      <div className="relative min-h-screen bg-background cursor-none pt-16">
         {/* Custom illustrated cursor */}
         <CustomCursor />
 
         {/* Spotlight effect */}
         <SpotlightEffect />
-
-        {/* Top Navigation */}
-        <Navbar />
 
         <a
           href="#content"
