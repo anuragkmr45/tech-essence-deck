@@ -9,6 +9,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SpotlightEffect from "@/components/SpotlightEffect";
 import CustomCursor from "@/components/CustomCursor";
+import ScrollToTop from "@/components/ScrollToTop";
 import { Helmet } from "react-helmet-async";
 import { personalInfo } from "@/data/portfolio";
 
@@ -56,6 +57,9 @@ const Index = () => {
           <Contact />
           <Footer />
         </main>
+
+        {/* Scroll to top button */}
+        <ScrollToTop />
       </div>
     </>
   );

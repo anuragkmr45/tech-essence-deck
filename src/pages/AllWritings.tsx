@@ -7,6 +7,7 @@ import { personalInfo } from "@/data/portfolio";
 import { Input } from "@/components/ui/input";
 import SpotlightEffect from "@/components/SpotlightEffect";
 import CustomCursor from "@/components/CustomCursor";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const categories = [
   { id: "all", label: "All", count: allContent.length },
@@ -239,6 +240,8 @@ const AllWritings = () => {
             </div>
           )}
         </div>
+
+        <ScrollToTop />
       </div>
     </>
   );

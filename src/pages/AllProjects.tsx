@@ -6,6 +6,8 @@ import { allProjects } from "@/data/allProjects";
 import { personalInfo } from "@/data/portfolio";
 import { Input } from "@/components/ui/input";
 import SpotlightEffect from "@/components/SpotlightEffect";
+import ScrollToTop from "@/components/ScrollToTop";
+import CustomCursor from "@/components/CustomCursor";
 
 const categories = [
   { id: "all", label: "All" },
@@ -47,8 +49,10 @@ const AllProjects = () => {
         />
       </Helmet>
 
-      <div className="relative min-h-screen bg-background">
+      <div className="relative min-h-screen cursor-none">
+        <CustomCursor />
         <SpotlightEffect />
+        <ScrollToTop />
 
         <div className="mx-auto max-w-6xl px-6 py-12 md:px-12 md:py-16">
           {/* Back Button */}
