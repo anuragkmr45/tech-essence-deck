@@ -53,7 +53,8 @@ const CaseStudiesArticles = () => {
     type: "article" | "case-study";
   }) => {
     const isCaseStudy = type === "case-study";
-    const linkTo = isCaseStudy ? `/case-study/${item.id}` : item.link;
+    const isArticle = type === "article";
+    const linkTo = isCaseStudy ? `/case-study/${item.id}` : `/article/${item.id}`;
     
     const cardClassName = `group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-500 block ${
       visibleItems.has(index)
@@ -122,48 +123,23 @@ const CaseStudiesArticles = () => {
           </div>
 
           {/* Read More Link */}
-          {isCaseStudy ? (
-            <span className="mt-4 inline-flex items-center gap-1.5 text-sm text-primary group-hover:text-primary/80 transition-colors">
-              Read case study
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </span>
-          ) : (
-            <a
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 transition-colors group/link"
-              onClick={(e) => e.stopPropagation()}
-            >
-              Read more
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
-            </a>
-          )}
+          <span className="mt-4 inline-flex items-center gap-1.5 text-sm text-primary group-hover:text-primary/80 transition-colors">
+            {isCaseStudy ? "Read case study" : "Read article"}
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+          </span>
         </div>
       </>
     );
     
-    if (isCaseStudy) {
-      return (
-        <Link
-          to={linkTo}
-          ref={(el) => (itemRefs.current[index] = el)}
-          className={cardClassName}
-          style={cardStyle}
-        >
-          {cardContent}
-        </Link>
-      );
-    }
-    
     return (
-      <div
+      <Link
+        to={linkTo}
         ref={(el) => (itemRefs.current[index] = el)}
         className={cardClassName}
         style={cardStyle}
       >
         {cardContent}
-      </div>
+      </Link>
     );
   };
 
