@@ -137,18 +137,17 @@ const AllWritings = () => {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredContent.map((item, index) => {
               const isCaseStudy = item.category === "case-study";
-              const linkTo = isCaseStudy ? `/case-study/${item.id}` : item.link;
+              const isArticle = item.category === "article";
+              const linkTo = isCaseStudy 
+                ? `/case-study/${item.id}` 
+                : isArticle 
+                  ? `/article/${item.id}`
+                  : item.link;
               
               return (
                 <Link
                   key={item.id}
-                  to={isCaseStudy ? linkTo : "#"}
-                  onClick={(e) => {
-                    if (!isCaseStudy) {
-                      e.preventDefault();
-                      window.open(item.link, "_blank");
-                    }
-                  }}
+                  to={linkTo}
                   className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300 animate-fade-in block"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
@@ -222,7 +221,7 @@ const AllWritings = () => {
 
                     {/* Read More Link */}
                     <span className="inline-flex items-center gap-1.5 text-sm text-primary group-hover:text-primary/80 transition-colors">
-                      {isCaseStudy ? "Read case study" : "Read more"}
+                      {isCaseStudy ? "Read case study" : "Read article"}
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </span>
                   </div>
