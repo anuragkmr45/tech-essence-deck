@@ -153,7 +153,7 @@ const CaseStudiesArticles = () => {
       <div className="flex items-center gap-4 mb-12">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-primary rounded-full" />
-          <h2 className="text-2xl font-bold text-foreground">
+          <h2 className="font-serif text-4xl md:text-5xl font-medium text-foreground tracking-tight">
             Case Studies & Articles
           </h2>
         </div>

@@ -15,8 +15,8 @@ const Hero = () => {
     <section className="min-h-[80vh] flex flex-col items-center justify-center text-center py-20">
       {/* Main Hero Text with Inline Image */}
       <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight animate-fade-in">
-          <span className="text-muted-foreground">Hey, I'm</span>{" "}
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium text-foreground leading-[1.05] tracking-tight animate-fade-in">
+          <span className="text-muted-foreground italic font-normal">Hey, I'm</span>{" "}
           <span className="inline-flex items-center gap-3">
             <FlipCard size="inline" />
             <span className="text-foreground">{personalInfo.name}</span>

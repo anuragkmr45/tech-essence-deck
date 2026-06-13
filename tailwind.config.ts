@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
@@ -51,6 +52,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        espresso: {
+          dark: "hsl(var(--espresso-dark))",
+          DEFAULT: "hsl(var(--espresso))",
+        },
+        walnut: "hsl(var(--walnut))",
+        cream: {
+          DEFAULT: "hsl(var(--cream))",
+          glow: "hsl(var(--cream-glow))",
+        },
+        // Legacy aliases — keep so existing class names compile
         navy: {
           dark: "hsl(var(--navy-dark))",
           DEFAULT: "hsl(var(--navy))",
