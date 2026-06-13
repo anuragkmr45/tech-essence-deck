@@ -45,7 +45,7 @@ const Projects = () => {
     >
       {/* Section Header */}
       <div className="mb-10">
-        <h2 className="text-2xl font-bold text-foreground mb-2">Projects</h2>
+        <h2 className="font-serif text-4xl md:text-5xl font-medium text-foreground mb-2 tracking-tight">Projects</h2>
         <div className="h-1 w-16 bg-primary rounded-full" />
       </div>
 
