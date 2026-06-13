@@ -80,26 +80,26 @@
     --teal: 41 30% 84%;
     --teal-glow: 41 35% 92%;
 
-    /* Gradients */
+    /* Gradients — quiet, no halos */
     --gradient-teal: linear-gradient(135deg, hsl(41 30% 84%), hsl(35 25% 70%));
     --gradient-card: linear-gradient(145deg, hsl(27 38% 9%), hsl(0 0% 0%));
     --gradient-text: linear-gradient(135deg, hsl(41 35% 92%), hsl(35 20% 60%));
-    --gradient-bg: radial-gradient(ellipse at top, hsl(27 38% 9%) 0%, hsl(0 0% 3%) 45%, hsl(0 0% 0%) 100%);
+    --gradient-bg: linear-gradient(180deg, hsl(0 0% 0%) 0%, hsl(0 0% 0%) 100%);
 
     /* Shadows */
-    --shadow-glow: 0 0 40px hsl(41 30% 84% / 0.10);
-    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.6);
-    --shadow-hover: 0 8px 32px hsl(28 50% 17% / 0.45);
+    --shadow-glow: 0 0 40px hsl(41 30% 84% / 0.08);
+    --shadow-card: 0 1px 0 hsl(28 50% 17% / 1);
+    --shadow-hover: 0 0 0 1px hsl(41 30% 84% / 0.25);
 
-    /* Typography */
-    --font-sans: 'Inter', system-ui, sans-serif;
-    --font-serif: '"Cormorant Garamond"', Georgia, serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    /* Typography — Warm Archive: Fraunces display, Space Grotesk body, JetBrains Mono labels */
+    --font-sans: 'Space Grotesk', system-ui, sans-serif;
+    --font-serif: 'Fraunces', Georgia, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
     /* Transitions */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 600ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
