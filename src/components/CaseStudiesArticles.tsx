@@ -149,11 +149,9 @@ const CaseStudiesArticles = () => {
       ref={sectionRef}
       className="py-24 scroll-mt-24"
     >
-      {/* Section Header — archive serial */}
-      <div className="mb-12">
-        <div className="section-serial mb-6">
-          <span>04 / Logs</span>
-        </div>
+      {/* Section Header */}
+      <div className="mb-14">
+        <p className="text-sm text-muted-foreground/80 mb-4">Writing</p>
         <h2 className="section-title">
           <span className="italic font-light">Notes</span> from the workshop
         </h2>

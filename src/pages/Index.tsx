@@ -29,16 +29,14 @@ const Index = () => {
       <div className="relative min-h-screen bg-background pt-20 md:pt-24">
         <a
           href="#content"
-          className="absolute left-0 top-0 block -translate-x-full rounded-none bg-primary px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.22em] text-primary-foreground focus-visible:translate-x-0"
+          className="absolute left-0 top-0 block -translate-x-full rounded-md bg-primary px-4 py-3 text-xs font-medium text-primary-foreground focus-visible:translate-x-0"
         >
-          Skip to Content
+          Skip to content
         </a>
 
-        {/* Hero — Warm Archive bordered grid */}
         <Hero />
 
-        {/* Main Content */}
-        <main id="content" className="mx-auto max-w-6xl px-6 md:px-10 pt-16 md:pt-24 pb-24 space-y-24 md:space-y-32">
+        <main id="content" className="mx-auto max-w-5xl px-6 md:px-10 pb-24 space-y-32 md:space-y-40">
           <About />
           <Experience />
           <Projects />
@@ -48,25 +46,6 @@ const Index = () => {
           <Footer />
         </main>
 
-        {/* Global status bar — bottom edge of viewport */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-walnut/60 bg-background/80 backdrop-blur-md">
-          <div className="mx-auto max-w-7xl px-6 md:px-10 py-2 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-50" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-              </span>
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-primary/80">
-                Archive Online
-              </span>
-            </div>
-            <span className="hidden sm:inline font-mono text-[9px] uppercase tracking-[0.25em] text-walnut">
-              {new Date().getFullYear()} — Anurag Kumar / Engineering Archive v3.0
-            </span>
-          </div>
-        </div>
-
-        {/* Scroll to top button */}
         <ScrollToTop />
       </div>
     </>

@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 
 // Warm Archive nav — mono labels, hairline walnut borders, status pill
 const globalNavItems = [
-  { label: "Index", href: "/", serial: "01" },
-  { label: "Works", href: "/projects", serial: "02" },
-  { label: "Logs", href: "/writings", serial: "03" },
+  { label: "Index", href: "/" },
+  { label: "Works", href: "/projects" },
+  { label: "Writing", href: "/writings" },
 ];
 
 const GlobalNavbar = () => {
