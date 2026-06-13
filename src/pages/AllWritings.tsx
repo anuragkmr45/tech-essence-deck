@@ -50,6 +50,11 @@ const AllWritings = () => {
           name="description"
           content={`Read case studies and articles by ${personalInfo.name} about web development, architecture, and engineering best practices.`}
         />
+        <link rel="canonical" href="https://tech-essence-deck.lovable.app/writings" />
+        <meta property="og:title" content={`Case Studies & Articles | ${personalInfo.name}`} />
+        <meta property="og:description" content={`Read case studies and articles by ${personalInfo.name} about web development, architecture, and engineering best practices.`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tech-essence-deck.lovable.app/writings" />
       </Helmet>
 
       <div className="relative min-h-screen cursor-none pt-16">
