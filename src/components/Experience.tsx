@@ -35,10 +35,14 @@ const Experience = () => {
       className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
       aria-label="Work experience"
     >
-      {/* Section Header */}
-      <div className="mb-10">
-        <h2 className="font-serif text-4xl md:text-5xl font-medium text-foreground mb-2 tracking-tight">Experience</h2>
-        <div className="h-1 w-16 bg-primary rounded-full" />
+      {/* Section Header — archive serial */}
+      <div className="mb-12">
+        <div className="section-serial mb-6">
+          <span>02 / Experience</span>
+        </div>
+        <h2 className="section-title">
+          <span className="italic font-light">Selected</span> trajectory
+        </h2>
       </div>
 
       <div className="relative">
