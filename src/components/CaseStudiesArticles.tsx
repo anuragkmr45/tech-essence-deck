@@ -149,14 +149,14 @@ const CaseStudiesArticles = () => {
       ref={sectionRef}
       className="py-24 scroll-mt-24"
     >
-      {/* Section Header */}
-      <div className="flex items-center gap-4 mb-12">
-        <div className="flex items-center gap-2">
-          <div className="w-1 h-6 bg-primary rounded-full" />
-          <h2 className="font-serif text-4xl md:text-5xl font-medium text-foreground tracking-tight">
-            Case Studies & Articles
-          </h2>
+      {/* Section Header — archive serial */}
+      <div className="mb-12">
+        <div className="section-serial mb-6">
+          <span>04 / Logs</span>
         </div>
+        <h2 className="section-title">
+          <span className="italic font-light">Notes</span> from the workshop
+        </h2>
       </div>
 
       {/* Case Studies */}

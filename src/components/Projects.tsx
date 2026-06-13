@@ -43,10 +43,14 @@ const Projects = () => {
       className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
       aria-label="Selected projects"
     >
-      {/* Section Header */}
-      <div className="mb-10">
-        <h2 className="font-serif text-4xl md:text-5xl font-medium text-foreground mb-2 tracking-tight">Projects</h2>
-        <div className="h-1 w-16 bg-primary rounded-full" />
+      {/* Section Header — archive serial */}
+      <div className="mb-12">
+        <div className="section-serial mb-6">
+          <span>03 / Works</span>
+        </div>
+        <h2 className="section-title">
+          <span className="italic font-light">Built</span> & shipped
+        </h2>
       </div>
 
       {/* Timeline line */}
