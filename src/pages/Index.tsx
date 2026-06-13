@@ -6,8 +6,6 @@ import CaseStudiesArticles from "@/components/CaseStudiesArticles";
 import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import SpotlightEffect from "@/components/SpotlightEffect";
-import CustomCursor from "@/components/CustomCursor";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Helmet } from "react-helmet-async";
 import { personalInfo } from "@/data/portfolio";
