@@ -102,6 +102,30 @@ const CaseStudyDetailPage = () => {
           {caseStudy.title} | Case Study | {personalInfo.name}
         </title>
         <meta name="description" content={caseStudy.oneLineSummary} />
+        <link rel="canonical" href={`https://tech-essence-deck.lovable.app/case-study/${caseStudy.id}`} />
+        <meta property="og:title" content={`${caseStudy.title} | Case Study | ${personalInfo.name}`} />
+        <meta property="og:description" content={caseStudy.oneLineSummary} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://tech-essence-deck.lovable.app/case-study/${caseStudy.id}`} />
+        {caseStudy.coverImage && <meta property="og:image" content={caseStudy.coverImage} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={caseStudy.title} />
+        <meta name="twitter:description" content={caseStudy.oneLineSummary} />
+        {caseStudy.coverImage && <meta name="twitter:image" content={caseStudy.coverImage} />}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": caseStudy.title,
+          "description": caseStudy.oneLineSummary,
+          "datePublished": caseStudy.publishedDate,
+          "image": caseStudy.coverImage,
+          "url": `https://tech-essence-deck.lovable.app/case-study/${caseStudy.id}`,
+          "author": {
+            "@type": "Person",
+            "name": personalInfo.name,
+            "url": "https://tech-essence-deck.lovable.app",
+          },
+        })}</script>
       </Helmet>
 
       <div className="relative min-h-screen cursor-none pt-16">
