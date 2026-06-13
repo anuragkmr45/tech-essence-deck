@@ -178,15 +178,38 @@
     animation: fadeInUp 0.6s ease-out forwards;
   }
 
-  /* Tech badge */
+  /* Tech badge — flat archive tag */
   .tech-badge {
-    @apply px-3 py-1.5 text-xs font-medium rounded-full;
-    @apply bg-primary/10 text-primary border border-primary/20;
+    @apply px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.15em] rounded-none;
+    @apply bg-transparent text-primary/80 border border-secondary;
     transition: var(--transition-fast);
   }
 
   .tech-badge:hover {
-    @apply bg-primary/20 border-primary/40;
+    @apply text-primary border-primary/60 bg-secondary/40;
+  }
+
+  /* Archive system — mono uppercase metadata labels */
+  .archive-label {
+    @apply font-mono text-[10px] uppercase tracking-[0.25em] text-walnut;
+  }
+
+  .archive-bracket {
+    @apply font-mono text-[10px] uppercase tracking-[0.2em] text-walnut;
+  }
+
+  /* Section heading combo: serial + uppercase label + serif title */
+  .section-serial {
+    @apply font-mono text-xs uppercase tracking-[0.25em] text-walnut flex items-center gap-3;
+  }
+
+  .section-serial::after {
+    content: '';
+    @apply h-px flex-1 bg-walnut/60;
+  }
+
+  .section-title {
+    @apply font-serif text-5xl md:text-7xl font-normal text-foreground leading-[0.9] tracking-tight;
   }
 
   /* Navigation link */
