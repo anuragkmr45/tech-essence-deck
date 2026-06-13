@@ -97,6 +97,35 @@ const ArticleDetailPage = () => {
           {article.title} | {personalInfo.name}
         </title>
         <meta name="description" content={article.subtitle || article.title} />
+        <link rel="canonical" href={`https://tech-essence-deck.lovable.app/article/${article.slug || article.id}`} />
+        <meta property="og:title" content={`${article.title} | ${personalInfo.name}`} />
+        <meta property="og:description" content={article.subtitle || article.title} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://tech-essence-deck.lovable.app/article/${article.slug || article.id}`} />
+        {article.coverImage && <meta property="og:image" content={article.coverImage} />}
+        <meta property="article:published_time" content={article.publishedDate} />
+        <meta property="article:section" content={article.category} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:description" content={article.subtitle || article.title} />
+        {article.coverImage && <meta name="twitter:image" content={article.coverImage} />}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": article.title,
+          "description": article.subtitle || article.title,
+          "datePublished": article.publishedDate,
+          "dateModified": article.updatedDate || article.publishedDate,
+          "image": article.coverImage,
+          "url": `https://tech-essence-deck.lovable.app/article/${article.slug || article.id}`,
+          "articleSection": article.category,
+          "keywords": article.tags?.join(", "),
+          "author": {
+            "@type": "Person",
+            "name": article.author?.name || personalInfo.name,
+            "url": "https://tech-essence-deck.lovable.app",
+          },
+        })}</script>
       </Helmet>
 
       <div className="relative min-h-screen cursor-none pt-16">
