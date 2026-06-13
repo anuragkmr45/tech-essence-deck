@@ -194,7 +194,7 @@ const ArticleDetailPage = () => {
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-foreground mb-4 leading-[1.1] tracking-tight">
               {article.title}
             </h1>
 
