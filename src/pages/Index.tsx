@@ -18,9 +18,11 @@ const Index = () => {
       <Helmet>
         <title>{personalInfo.name} | {personalInfo.role}</title>
         <meta name="description" content={`${personalInfo.name} - ${personalInfo.role}. ${personalInfo.tagline}`} />
+        <link rel="canonical" href="https://tech-essence-deck.lovable.app/" />
         <meta property="og:title" content={`${personalInfo.name} | ${personalInfo.role}`} />
         <meta property="og:description" content={personalInfo.tagline} />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tech-essence-deck.lovable.app/" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${personalInfo.name} | ${personalInfo.role}`} />
         <meta name="twitter:description" content={personalInfo.tagline} />

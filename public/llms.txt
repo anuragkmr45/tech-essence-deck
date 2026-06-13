@@ -1,0 +1,30 @@
+# Anurag Kumar
+
+> Portfolio of Anurag Kumar — a full-stack & mobile engineer building secure, performant, and delightful digital products with React, Next.js, Node.js, and React Native.
+
+## Pages
+
+- [Home](/): Overview, about, experience, featured projects and writings.
+- [Projects](/projects): Full list of projects across web, AI, dev tools, desktop, and mobile.
+- [Writings](/writings): Case studies and engineering articles.
+
+## Projects
+
+- [Real-Time Digital Signage System](/projects/real-time-digital-signage-system): Enterprise-grade offline-first digital signage platform.
+- [University Online Exam Software](/projects/university-online-exam-software): Scalable exam platform serving 5,000+ users.
+- [VidChat](/projects/vidchat): Real-time video calling app using WebRTC.
+- [Magic Notes](/projects/magic-notes): Open-source collaborative note-taking app.
+- [@anuragkmr_45/encrypt-decrypt](/projects/encrypt-decrypt): AES-256-GCM encryption utility for Node.js.
+- [rate-limiter-utils](/projects/rate-limiter-utils): Type-safe NPM rate-limiting package.
+
+## Articles
+
+- [Building Secure APIs with Rate Limiting and CSRF Protection](/article/building-secure-apis-rate-limiting-csrf)
+- [Offline-First Architecture: Lessons from Building a Digital Signage System](/article/offline-first-architecture-digital-signage)
+
+## Case Studies
+
+- [Case Study 1](/case-study/cs1)
+- [Case Study 2](/case-study/cs2)
+- [Case Study 3](/case-study/cs3)
+- [Case Study 4](/case-study/cs4)

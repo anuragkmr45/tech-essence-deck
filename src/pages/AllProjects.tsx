@@ -66,6 +66,11 @@ const AllProjects = () => {
           name="description"
           content={`Explore all projects by ${personalInfo.name} - Web, AI, Blockchain, Dev Tools, and more.`}
         />
+        <link rel="canonical" href="https://tech-essence-deck.lovable.app/projects" />
+        <meta property="og:title" content={`All Projects | ${personalInfo.name}`} />
+        <meta property="og:description" content={`Explore all projects by ${personalInfo.name} - Web, AI, Blockchain, Dev Tools, and more.`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tech-essence-deck.lovable.app/projects" />
       </Helmet>
 
       <div className="relative min-h-screen cursor-none pt-16">

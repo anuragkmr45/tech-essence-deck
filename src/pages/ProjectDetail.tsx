@@ -95,6 +95,30 @@ const ProjectDetailPage = () => {
           {project.title} | Projects | {personalInfo.name}
         </title>
         <meta name="description" content={project.summary} />
+        <link rel="canonical" href={`https://tech-essence-deck.lovable.app/projects/${project.slug}`} />
+        <meta property="og:title" content={`${project.title} | Projects | ${personalInfo.name}`} />
+        <meta property="og:description" content={project.summary} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://tech-essence-deck.lovable.app/projects/${project.slug}`} />
+        {project.coverImage && <meta property="og:image" content={project.coverImage} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${project.title} | ${personalInfo.name}`} />
+        <meta name="twitter:description" content={project.summary} />
+        {project.coverImage && <meta name="twitter:image" content={project.coverImage} />}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          "name": project.title,
+          "description": project.summary,
+          "url": `https://tech-essence-deck.lovable.app/projects/${project.slug}`,
+          "image": project.coverImage,
+          "keywords": project.quickFacts?.techStack?.join(", "),
+          "author": {
+            "@type": "Person",
+            "name": personalInfo.name,
+            "url": "https://tech-essence-deck.lovable.app",
+          },
+        })}</script>
       </Helmet>
 
       <div className="relative min-h-screen cursor-none pt-16">
