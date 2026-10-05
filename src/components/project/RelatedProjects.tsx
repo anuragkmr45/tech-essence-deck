@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
 import type { ProjectDetail } from "@/data/projectDetails";
 
@@ -20,7 +20,7 @@ const RelatedProjects = ({ projects }: RelatedProjectsProps) => {
         {projects.map((project) => (
           <Link
             key={project.slug}
-            to={`/projects/${project.slug}`}
+            href={`/projects/${project.slug}`}
             className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300"
           >
             <div className="relative aspect-video overflow-hidden">

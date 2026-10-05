@@ -1,10 +1,17 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ArrowRight, Calendar, Clock, BookOpen, FileText } from "lucide-react";
-import { articles, caseStudies } from "@/data/articlesAndCaseStudies";
+import type { WritingSummary } from "@/lib/content/repository";
 import { Button } from "./ui/button";
 
-const CaseStudiesArticles = () => {
+interface CaseStudiesArticlesProps {
+  articles: WritingSummary[];
+  caseStudies: WritingSummary[];
+}
+
+const CaseStudiesArticles = ({ articles, caseStudies }: CaseStudiesArticlesProps) => {
   const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
   const sectionRef = useRef<HTMLElement>(null);
   const itemRefs = useRef<(HTMLDivElement | HTMLAnchorElement | null)[]>([]);
@@ -48,7 +55,7 @@ const CaseStudiesArticles = () => {
     index,
     type,
   }: {
-    item: (typeof articles)[0];
+    item: WritingSummary;
     index: number;
     type: "article" | "case-study";
   }) => {
@@ -133,8 +140,10 @@ const CaseStudiesArticles = () => {
     
     return (
       <Link
-        to={linkTo}
-        ref={(el) => (itemRefs.current[index] = el)}
+        href={linkTo}
+        ref={(el) => {
+          itemRefs.current[index] = el;
+        }}
         className={cardClassName}
         style={cardStyle}
       >
@@ -200,7 +209,7 @@ const CaseStudiesArticles = () => {
           variant="outline"
           className="border-primary/50 hover:border-primary hover:bg-primary/10 group"
         >
-          <Link to="/writings" className="flex items-center gap-2">
+          <Link href="/writings" className="flex items-center gap-2">
             View All Writings
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>

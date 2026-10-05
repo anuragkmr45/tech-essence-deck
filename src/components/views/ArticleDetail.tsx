@@ -1,13 +1,10 @@
+"use client";
+
 import { useState, useEffect, useMemo } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, ChevronRight, Tag } from "lucide-react";
-import { personalInfo } from "@/data/portfolio";
-import {
-  getArticleByIdOrSlug,
-  getAdjacentArticles,
-  type ContentBlock,
-} from "@/data/articleDetails";
+import type { ContentBlock } from "@/data/articleDetails";
+import type { ArticlePageData } from "@/lib/content/repository";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -28,15 +25,8 @@ import ArticleAuthorCard from "@/components/article/ArticleAuthorCard";
 import RelatedArticles from "@/components/article/RelatedArticles";
 import ArticleNavigation from "@/components/article/ArticleNavigation";
 
-const ArticleDetailPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+const ArticleDetailPage = ({ article, adjacent, related }: ArticlePageData) => {
   const [activeSection, setActiveSection] = useState<string>("");
-
-  const article = id ? getArticleByIdOrSlug(id) : null;
-  const adjacentArticles = article
-    ? getAdjacentArticles(article.id)
-    : { prev: null, next: null };
 
   // Extract TOC items from content
   const tocItems = useMemo(() => {
@@ -52,12 +42,6 @@ const ArticleDetailPage = () => {
         level: block.level,
       }));
   }, [article]);
-
-  useEffect(() => {
-    if (!article) {
-      navigate("/writings", { replace: true });
-    }
-  }, [article, navigate]);
 
   // Track active section for TOC highlighting
   useEffect(() => {
@@ -78,10 +62,6 @@ const ArticleDetailPage = () => {
     return () => observer.disconnect();
   }, [article]);
 
-  if (!article) {
-    return null;
-  }
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "long",
@@ -92,42 +72,6 @@ const ArticleDetailPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>
-          {article.title} | {personalInfo.name}
-        </title>
-        <meta name="description" content={article.subtitle || article.title} />
-        <link rel="canonical" href={`https://tech-essence-deck.lovable.app/article/${article.slug || article.id}`} />
-        <meta property="og:title" content={`${article.title} | ${personalInfo.name}`} />
-        <meta property="og:description" content={article.subtitle || article.title} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://tech-essence-deck.lovable.app/article/${article.slug || article.id}`} />
-        {article.coverImage && <meta property="og:image" content={article.coverImage} />}
-        <meta property="article:published_time" content={article.publishedDate} />
-        <meta property="article:section" content={article.category} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={article.subtitle || article.title} />
-        {article.coverImage && <meta name="twitter:image" content={article.coverImage} />}
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "headline": article.title,
-          "description": article.subtitle || article.title,
-          "datePublished": article.publishedDate,
-          "dateModified": article.updatedDate || article.publishedDate,
-          "image": article.coverImage,
-          "url": `https://tech-essence-deck.lovable.app/article/${article.slug || article.id}`,
-          "articleSection": article.category,
-          "keywords": article.tags?.join(", "),
-          "author": {
-            "@type": "Person",
-            "name": article.author?.name || personalInfo.name,
-            "url": "https://tech-essence-deck.lovable.app",
-          },
-        })}</script>
-      </Helmet>
-
       <div className="relative min-h-screen cursor-none pt-16">
         <CustomCursor />
         <SpotlightEffect />
@@ -138,7 +82,7 @@ const ArticleDetailPage = () => {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/" className="hover:text-primary transition-colors">
+                  <Link href="/" className="hover:text-primary transition-colors">
                     Home
                   </Link>
                 </BreadcrumbLink>
@@ -149,7 +93,7 @@ const ArticleDetailPage = () => {
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
                   <Link
-                    to="/writings"
+                    href="/writings"
                     className="hover:text-primary transition-colors"
                   >
                     Writings
@@ -169,7 +113,7 @@ const ArticleDetailPage = () => {
 
           {/* Back Button */}
           <Link
-            to="/writings"
+            href="/writings"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -210,7 +154,7 @@ const ArticleDetailPage = () => {
               {article.tags.map((tag) => (
                 <Link
                   key={tag}
-                  to={`/writings?tag=${encodeURIComponent(tag)}`}
+                  href={`/writings?tag=${encodeURIComponent(tag)}`}
                   className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-secondary/50 text-muted-foreground hover:text-primary hover:bg-secondary transition-colors"
                 >
                   <Tag className="h-3 w-3" />
@@ -253,12 +197,12 @@ const ArticleDetailPage = () => {
               {article.author && <ArticleAuthorCard author={article.author} />}
 
               {/* Related Articles */}
-              <RelatedArticles currentId={article.id} />
+              <RelatedArticles articles={related} />
 
               {/* Navigation */}
               <ArticleNavigation
-                prev={adjacentArticles.prev}
-                next={adjacentArticles.next}
+                prev={adjacent.prev}
+                next={adjacent.next}
               />
             </article>
 

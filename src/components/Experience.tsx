@@ -1,8 +1,10 @@
-import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
-import { experience } from "@/data/portfolio";
-import { useEffect, useRef, useState } from "react";
+"use client";
 
-const Experience = () => {
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
+import type { HomeContent } from "@/lib/content/repository";
+
+const Experience = ({ experience }: Pick<HomeContent, "experience">) => {
   const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
@@ -51,7 +53,9 @@ const Experience = () => {
           {experience.map((job, index) => (
             <li
               key={index}
-              ref={(el) => (itemRefs.current[index] = el)}
+              ref={(el) => {
+                itemRefs.current[index] = el;
+              }}
               data-index={index}
               className={`relative md:grid md:grid-cols-3 md:gap-8 transition-all duration-700 ${
                 visibleItems.has(index)

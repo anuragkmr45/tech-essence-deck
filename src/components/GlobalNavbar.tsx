@@ -1,5 +1,8 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +14,7 @@ const globalNavItems = [
 ];
 
 const GlobalNavbar = () => {
-  const location = useLocation();
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -21,12 +24,8 @@ const GlobalNavbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location.pathname]);
-
   const isActive = (href: string) =>
-    href === "/" ? location.pathname === "/" : location.pathname.startsWith(href);
+    href === "/" ? pathname === "/" : pathname?.startsWith(href) ?? false;
 
   return (
     <nav
@@ -39,7 +38,7 @@ const GlobalNavbar = () => {
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <div className="flex items-center justify-between h-16">
           <Link
-            to="/"
+            href="/"
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >
             Anurag Kumar
@@ -51,7 +50,8 @@ const GlobalNavbar = () => {
               return (
                 <li key={item.href}>
                   <Link
-                    to={item.href}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
                     className={cn(
                       "group relative text-sm transition-colors duration-300",
                       active ? "text-primary" : "text-muted-foreground hover:text-primary"
@@ -91,7 +91,8 @@ const GlobalNavbar = () => {
               return (
                 <li key={item.href}>
                   <Link
-                    to={item.href}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
                     className={cn(
                       "block px-2 py-3 text-sm transition-colors",
                       active ? "text-primary" : "text-muted-foreground hover:text-primary"

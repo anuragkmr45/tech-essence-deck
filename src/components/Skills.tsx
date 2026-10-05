@@ -1,5 +1,5 @@
-import { skills, achievements, education } from "@/data/portfolio";
 import { Code2, Trophy, Award, GraduationCap } from "lucide-react";
+import type { HomeContent } from "@/lib/content/repository";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   code: Code2,
@@ -7,7 +7,11 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   award: Award,
 };
 
-const Skills = () => {
+const Skills = ({
+  skills,
+  achievements,
+  education,
+}: Pick<HomeContent, "skills" | "achievements" | "education">) => {
   return (
     <section
       id="skills"

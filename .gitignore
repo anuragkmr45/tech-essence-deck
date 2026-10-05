@@ -8,9 +8,19 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+.next
+out
+*.tsbuildinfo
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
+
+# Playwright artifacts
+playwright-report
+test-results
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +32,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel

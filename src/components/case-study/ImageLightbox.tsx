@@ -47,6 +47,7 @@ const ImageLightbox = ({
         <Button
           variant="ghost"
           size="icon"
+          aria-label="Close image viewer"
           onClick={onClose}
           className="absolute top-4 right-4 z-50 h-10 w-10 rounded-full bg-background/80 hover:bg-background"
         >
@@ -59,6 +60,7 @@ const ImageLightbox = ({
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Previous image"
               onClick={handlePrev}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-50 h-12 w-12 rounded-full bg-background/80 hover:bg-background"
             >
@@ -67,6 +69,7 @@ const ImageLightbox = ({
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Next image"
               onClick={handleNext}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-50 h-12 w-12 rounded-full bg-background/80 hover:bg-background"
             >

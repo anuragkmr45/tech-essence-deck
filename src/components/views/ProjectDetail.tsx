@@ -1,6 +1,7 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import Link from "next/link";
 import {
   ArrowLeft,
   ExternalLink,
@@ -9,12 +10,7 @@ import {
   ChevronRight,
   BookOpen,
 } from "lucide-react";
-import { personalInfo } from "@/data/portfolio";
-import {
-  getProjectBySlug,
-  getAdjacentProjects,
-  getRelatedProjects,
-} from "@/data/projectDetails";
+import type { ProjectPageData } from "@/lib/content/repository";
 import { Button } from "@/components/ui/button";
 import {
   Breadcrumb,
@@ -35,21 +31,9 @@ import ProjectGallery from "@/components/project/ProjectGallery";
 import RelatedProjects from "@/components/project/RelatedProjects";
 import ProjectNavigation from "@/components/project/ProjectNavigation";
 
-const ProjectDetailPage = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
+const ProjectDetailPage = ({ project, adjacent, related }: ProjectPageData) => {
   const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
-
-  const project = slug ? getProjectBySlug(slug) : null;
-  const adjacentProjects = slug ? getAdjacentProjects(slug) : { prev: null, next: null };
-  const relatedProjects = slug ? getRelatedProjects(slug, 3) : [];
-
-  useEffect(() => {
-    if (!project) {
-      navigate("/projects", { replace: true });
-    }
-  }, [project, navigate]);
 
   // Track active section for progress indicator
   useEffect(() => {
@@ -70,10 +54,6 @@ const ProjectDetailPage = () => {
     return () => observer.disconnect();
   }, [project]);
 
-  if (!project) {
-    return null;
-  }
-
   // Collect all sections for navigation
   const allSections = [
     { id: "overview", title: "Overview / TL;DR" },
@@ -90,37 +70,6 @@ const ProjectDetailPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>
-          {project.title} | Projects | {personalInfo.name}
-        </title>
-        <meta name="description" content={project.summary} />
-        <link rel="canonical" href={`https://tech-essence-deck.lovable.app/projects/${project.slug}`} />
-        <meta property="og:title" content={`${project.title} | Projects | ${personalInfo.name}`} />
-        <meta property="og:description" content={project.summary} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://tech-essence-deck.lovable.app/projects/${project.slug}`} />
-        {project.coverImage && <meta property="og:image" content={project.coverImage} />}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${project.title} | ${personalInfo.name}`} />
-        <meta name="twitter:description" content={project.summary} />
-        {project.coverImage && <meta name="twitter:image" content={project.coverImage} />}
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "CreativeWork",
-          "name": project.title,
-          "description": project.summary,
-          "url": `https://tech-essence-deck.lovable.app/projects/${project.slug}`,
-          "image": project.coverImage,
-          "keywords": project.quickFacts?.techStack?.join(", "),
-          "author": {
-            "@type": "Person",
-            "name": personalInfo.name,
-            "url": "https://tech-essence-deck.lovable.app",
-          },
-        })}</script>
-      </Helmet>
-
       <div className="relative min-h-screen cursor-none pt-16">
         <CustomCursor />
         <SpotlightEffect />
@@ -131,7 +80,7 @@ const ProjectDetailPage = () => {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/" className="hover:text-primary transition-colors">
+                  <Link href="/" className="hover:text-primary transition-colors">
                     Home
                   </Link>
                 </BreadcrumbLink>
@@ -142,7 +91,7 @@ const ProjectDetailPage = () => {
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
                   <Link
-                    to="/projects"
+                    href="/projects"
                     className="hover:text-primary transition-colors"
                   >
                     Projects
@@ -162,7 +111,7 @@ const ProjectDetailPage = () => {
 
           {/* Back Button */}
           <Link
-            to="/projects"
+            href="/projects"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -238,7 +187,7 @@ const ProjectDetailPage = () => {
                 {project.links.caseStudy && (
                   <Button variant="outline" asChild>
                     <Link
-                      to={project.links.caseStudy}
+                      href={project.links.caseStudy}
                       className="flex items-center gap-2"
                     >
                       <BookOpen className="h-4 w-4" />
@@ -313,15 +262,12 @@ const ProjectDetailPage = () => {
               )}
 
               {/* Related Projects */}
-              {relatedProjects.length > 0 && (
-                <RelatedProjects projects={relatedProjects} />
+              {related.length > 0 && (
+                <RelatedProjects projects={related} />
               )}
 
               {/* Previous / Next Navigation */}
-              <ProjectNavigation
-                prev={adjacentProjects.prev}
-                next={adjacentProjects.next}
-              />
+              <ProjectNavigation prev={adjacent.prev} next={adjacent.next} />
             </main>
           </div>
         </div>

@@ -1,16 +1,29 @@
+"use client";
+
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { usePathname } from "next/navigation";
 
 const ScrollRestoration = () => {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Smooth scroll to top on route change
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
+    const frame = window.requestAnimationFrame(() => {
+      const hash = decodeURIComponent(window.location.hash.slice(1));
+      const target = hash ? document.getElementById(hash) : null;
+
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
     });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [pathname]);
 
   return null;

@@ -1,6 +1,7 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import Link from "next/link";
 import {
   ArrowLeft,
   ExternalLink,
@@ -9,11 +10,7 @@ import {
   ChevronRight,
   Calendar,
 } from "lucide-react";
-import { personalInfo } from "@/data/portfolio";
-import {
-  caseStudyDetails,
-  getAdjacentCaseStudies,
-} from "@/data/caseStudyDetails";
+import type { CaseStudyPageData } from "@/lib/content/repository";
 import { Button } from "@/components/ui/button";
 import {
   Breadcrumb,
@@ -35,20 +32,9 @@ import ImageGallery from "@/components/case-study/ImageGallery";
 import RelatedCaseStudies from "@/components/case-study/RelatedCaseStudies";
 import CaseStudyNavigation from "@/components/case-study/CaseStudyNavigation";
 
-const CaseStudyDetailPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+const CaseStudyDetailPage = ({ caseStudy, adjacent, related }: CaseStudyPageData) => {
   const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
-
-  const caseStudy = id ? caseStudyDetails[id] : null;
-  const adjacentCaseStudies = id ? getAdjacentCaseStudies(id) : { prev: null, next: null };
-
-  useEffect(() => {
-    if (!caseStudy) {
-      navigate("/writings", { replace: true });
-    }
-  }, [caseStudy, navigate]);
 
   // Track active section for progress indicator
   useEffect(() => {
@@ -68,10 +54,6 @@ const CaseStudyDetailPage = () => {
 
     return () => observer.disconnect();
   }, [caseStudy]);
-
-  if (!caseStudy) {
-    return null;
-  }
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return null;
@@ -97,37 +79,6 @@ const CaseStudyDetailPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>
-          {caseStudy.title} | Case Study | {personalInfo.name}
-        </title>
-        <meta name="description" content={caseStudy.oneLineSummary} />
-        <link rel="canonical" href={`https://tech-essence-deck.lovable.app/case-study/${caseStudy.id}`} />
-        <meta property="og:title" content={`${caseStudy.title} | Case Study | ${personalInfo.name}`} />
-        <meta property="og:description" content={caseStudy.oneLineSummary} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://tech-essence-deck.lovable.app/case-study/${caseStudy.id}`} />
-        {caseStudy.coverImage && <meta property="og:image" content={caseStudy.coverImage} />}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={caseStudy.title} />
-        <meta name="twitter:description" content={caseStudy.oneLineSummary} />
-        {caseStudy.coverImage && <meta name="twitter:image" content={caseStudy.coverImage} />}
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "headline": caseStudy.title,
-          "description": caseStudy.oneLineSummary,
-          "datePublished": caseStudy.publishedDate,
-          "image": caseStudy.coverImage,
-          "url": `https://tech-essence-deck.lovable.app/case-study/${caseStudy.id}`,
-          "author": {
-            "@type": "Person",
-            "name": personalInfo.name,
-            "url": "https://tech-essence-deck.lovable.app",
-          },
-        })}</script>
-      </Helmet>
-
       <div className="relative min-h-screen cursor-none pt-16">
         <CustomCursor />
         <SpotlightEffect />
@@ -138,7 +89,7 @@ const CaseStudyDetailPage = () => {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/" className="hover:text-primary transition-colors">
+                  <Link href="/" className="hover:text-primary transition-colors">
                     Home
                   </Link>
                 </BreadcrumbLink>
@@ -149,7 +100,7 @@ const CaseStudyDetailPage = () => {
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
                   <Link
-                    to="/writings"
+                    href="/writings"
                     className="hover:text-primary transition-colors"
                   >
                     Writings
@@ -169,7 +120,7 @@ const CaseStudyDetailPage = () => {
 
           {/* Back Button */}
           <Link
-            to="/writings"
+            href="/writings"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -315,12 +266,12 @@ const CaseStudyDetailPage = () => {
               )}
 
               {/* Related Case Studies */}
-              <RelatedCaseStudies currentId={caseStudy.id} />
+              <RelatedCaseStudies caseStudies={related} />
 
               {/* Previous / Next Navigation */}
               <CaseStudyNavigation
-                prev={adjacentCaseStudies.prev}
-                next={adjacentCaseStudies.next}
+                prev={adjacent.prev}
+                next={adjacent.next}
               />
             </main>
           </div>

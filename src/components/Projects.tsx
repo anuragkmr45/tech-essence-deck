@@ -1,9 +1,15 @@
-import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
-import { projects, npmPackages } from "@/data/portfolio";
-import ProjectCard from "./ProjectCard";
-import { useEffect, useRef, useState } from "react";
+"use client";
 
-const Projects = () => {
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
+import type { HomeContent } from "@/lib/content/repository";
+import ProjectCard from "./ProjectCard";
+
+const Projects = ({
+  projects,
+  npmPackages,
+}: Pick<HomeContent, "projects" | "npmPackages">) => {
   const featuredProjects = projects.filter((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
   
@@ -291,7 +297,7 @@ const Projects = () => {
       </div>
 
       <div className="mt-12 text-center">
-        <a
+        <Link
           href="/projects"
           className="inline-flex items-center font-medium leading-tight text-foreground group"
         >
@@ -299,7 +305,7 @@ const Projects = () => {
             View All Projects
           </span>
           <ArrowUpRight className="ml-1 h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-        </a>
+        </Link>
       </div>
     </section>
   );

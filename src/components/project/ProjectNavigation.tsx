@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ProjectDetail } from "@/data/projectDetails";
 
@@ -12,7 +12,7 @@ const ProjectNavigation = ({ prev, next }: ProjectNavigationProps) => {
     <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-secondary/50">
       {prev ? (
         <Link
-          to={`/projects/${prev.slug}`}
+          href={`/projects/${prev.slug}`}
           className="flex-1 group p-4 rounded-lg bg-secondary/30 border border-secondary/50 hover:border-primary/50 transition-all"
         >
           <div className="flex items-center gap-2 text-muted-foreground mb-2">
@@ -29,7 +29,7 @@ const ProjectNavigation = ({ prev, next }: ProjectNavigationProps) => {
 
       {next ? (
         <Link
-          to={`/projects/${next.slug}`}
+          href={`/projects/${next.slug}`}
           className="flex-1 group p-4 rounded-lg bg-secondary/30 border border-secondary/50 hover:border-primary/50 transition-all text-right"
         >
           <div className="flex items-center justify-end gap-2 text-muted-foreground mb-2">

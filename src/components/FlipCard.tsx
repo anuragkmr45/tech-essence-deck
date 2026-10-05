@@ -35,7 +35,7 @@ const FlipCard = ({ size = "default" }: FlipCardProps) => {
         {/* Front - Illustration */}
         <div className="absolute w-full h-full backface-hidden rounded-full overflow-hidden border-2 border-primary/50 shadow-lg shadow-primary/20 group-hover:border-primary group-hover:shadow-primary/40 transition-all duration-300">
           <img
-            src={illustrationImg}
+            src={illustrationImg.src}
             alt="Anurag Kumar - Illustration"
             className="w-full h-full object-cover"
           />
@@ -45,7 +45,7 @@ const FlipCard = ({ size = "default" }: FlipCardProps) => {
         {/* Back - Real Photo */}
         <div className="absolute w-full h-full backface-hidden rotate-y-180 rounded-full overflow-hidden border-2 border-primary shadow-lg shadow-primary/30">
           <img
-            src={photoImg}
+            src={photoImg.src}
             alt="Anurag Kumar - Photo"
             className="w-full h-full object-cover"
           />

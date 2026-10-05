@@ -1,26 +1,38 @@
+"use client";
+
 import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Search, ArrowLeft, ArrowRight, Calendar, Clock, BookOpen, FileText } from "lucide-react";
-import { Helmet } from "react-helmet-async";
-import { articles, caseStudies, allContent } from "@/data/articlesAndCaseStudies";
-import { personalInfo } from "@/data/portfolio";
+import type { WritingSummary } from "@/lib/content/repository";
 import { Input } from "@/components/ui/input";
 import SpotlightEffect from "@/components/SpotlightEffect";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollToTop from "@/components/ScrollToTop";
 
-const categories = [
-  { id: "all", label: "All", count: allContent.length },
-  { id: "case-study", label: "Case Studies", count: caseStudies.length },
-  { id: "article", label: "Articles", count: articles.length },
-];
+interface AllWritingsProps {
+  content: WritingSummary[];
+}
 
-const AllWritings = () => {
+const AllWritings = ({ content }: AllWritingsProps) => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const categories = [
+    { id: "all", label: "All", count: content.length },
+    {
+      id: "case-study",
+      label: "Case Studies",
+      count: content.filter((item) => item.category === "case-study").length,
+    },
+    {
+      id: "article",
+      label: "Articles",
+      count: content.filter((item) => item.category === "article").length,
+    },
+  ];
+
   const filteredContent = useMemo(() => {
-    return allContent.filter((item) => {
+    return content.filter((item) => {
       const matchesCategory =
         activeCategory === "all" || item.category === activeCategory;
       const matchesSearch =
@@ -32,7 +44,7 @@ const AllWritings = () => {
         );
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, content, searchQuery]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -44,19 +56,6 @@ const AllWritings = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Case Studies & Articles | {personalInfo.name}</title>
-        <meta
-          name="description"
-          content={`Read case studies and articles by ${personalInfo.name} about web development, architecture, and engineering best practices.`}
-        />
-        <link rel="canonical" href="https://tech-essence-deck.lovable.app/writings" />
-        <meta property="og:title" content={`Case Studies & Articles | ${personalInfo.name}`} />
-        <meta property="og:description" content={`Read case studies and articles by ${personalInfo.name} about web development, architecture, and engineering best practices.`} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tech-essence-deck.lovable.app/writings" />
-      </Helmet>
-
       <div className="relative min-h-screen cursor-none pt-16">
         <CustomCursor />
         <SpotlightEffect />
@@ -64,7 +63,7 @@ const AllWritings = () => {
         <div className="mx-auto max-w-6xl px-6 py-12 md:px-12 md:py-16">
           {/* Back Button */}
           <Link
-            to="/"
+            href="/"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -152,7 +151,7 @@ const AllWritings = () => {
               return (
                 <Link
                   key={item.id}
-                  to={linkTo}
+                  href={linkTo}
                   className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300 animate-fade-in block"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >

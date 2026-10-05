@@ -1,24 +1,22 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Clock, ArrowRight } from "lucide-react";
-import { getRelatedArticles } from "@/data/articleDetails";
+import type { ArticleDetail } from "@/data/articleDetails";
 
 interface RelatedArticlesProps {
-  currentId: string;
+  articles: ArticleDetail[];
 }
 
-const RelatedArticles = ({ currentId }: RelatedArticlesProps) => {
-  const related = getRelatedArticles(currentId, 3);
-
-  if (related.length === 0) return null;
+const RelatedArticles = ({ articles }: RelatedArticlesProps) => {
+  if (articles.length === 0) return null;
 
   return (
     <section className="mt-16 pt-8 border-t border-secondary/50">
       <h3 className="text-xl font-bold text-foreground mb-6">Related Articles</h3>
       <div className="grid gap-4 md:grid-cols-3">
-        {related.map((article) => (
+        {articles.map((article) => (
           <Link
             key={article.id}
-            to={`/article/${article.id}`}
+            href={`/article/${article.id}`}
             className="group p-4 rounded-xl bg-secondary/30 border border-secondary/50 hover:border-primary/50 transition-all"
           >
             {article.coverImage && (

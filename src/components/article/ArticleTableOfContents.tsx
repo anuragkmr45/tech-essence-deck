@@ -112,6 +112,7 @@ const ArticleTableOfContents = ({ items, activeId, className }: ArticleTableOfCo
             variant="outline"
             size="sm"
             className="flex-1"
+            aria-label="Share on X"
             onClick={() => handleShare("twitter")}
           >
             <Twitter className="h-4 w-4" />
@@ -120,6 +121,7 @@ const ArticleTableOfContents = ({ items, activeId, className }: ArticleTableOfCo
             variant="outline"
             size="sm"
             className="flex-1"
+            aria-label="Share on LinkedIn"
             onClick={() => handleShare("linkedin")}
           >
             <Linkedin className="h-4 w-4" />
@@ -128,6 +130,7 @@ const ArticleTableOfContents = ({ items, activeId, className }: ArticleTableOfCo
             variant="outline"
             size="sm"
             className="flex-1"
+            aria-label="Copy article link"
             onClick={handleCopyLink}
           >
             {copied ? (

@@ -1,10 +1,9 @@
+"use client";
+
 import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Search, ArrowLeft, Github, ExternalLink, ArrowRight } from "lucide-react";
-import { Helmet } from "react-helmet-async";
-import { allProjects } from "@/data/allProjects";
-import { projectTitleToSlug, projectDetails } from "@/data/projectDetails";
-import { personalInfo } from "@/data/portfolio";
+import type { ProjectListingItem } from "@/lib/content/repository";
 import { Input } from "@/components/ui/input";
 import SpotlightEffect from "@/components/SpotlightEffect";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -21,12 +20,16 @@ const categories = [
   { id: "other", label: "Other" },
 ];
 
-const AllProjects = () => {
+interface AllProjectsProps {
+  projects: ProjectListingItem[];
+}
+
+const AllProjects = ({ projects }: AllProjectsProps) => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredProjects = useMemo(() => {
-    return allProjects.filter((project) => {
+    return projects.filter((project) => {
       const matchesCategory =
         activeCategory === "all" || project.category === activeCategory;
       const matchesSearch =
@@ -38,41 +41,10 @@ const AllProjects = () => {
         );
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
-
-  // Get slug for project if it has a detail page
-  const getProjectSlug = (title: string): string | null => {
-    const slug = projectTitleToSlug[title];
-    if (slug && projectDetails[slug]) {
-      return slug;
-    }
-    return null;
-  };
-
-  // Get status from project details
-  const getProjectStatus = (title: string): "live" | "in-progress" | "archived" | null => {
-    const slug = projectTitleToSlug[title];
-    if (slug && projectDetails[slug]) {
-      return projectDetails[slug].status;
-    }
-    return null;
-  };
+  }, [activeCategory, projects, searchQuery]);
 
   return (
     <>
-      <Helmet>
-        <title>All Projects | {personalInfo.name}</title>
-        <meta
-          name="description"
-          content={`Explore all projects by ${personalInfo.name} - Web, AI, Blockchain, Dev Tools, and more.`}
-        />
-        <link rel="canonical" href="https://tech-essence-deck.lovable.app/projects" />
-        <meta property="og:title" content={`All Projects | ${personalInfo.name}`} />
-        <meta property="og:description" content={`Explore all projects by ${personalInfo.name} - Web, AI, Blockchain, Dev Tools, and more.`} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tech-essence-deck.lovable.app/projects" />
-      </Helmet>
-
       <div className="relative min-h-screen cursor-none pt-16">
         <CustomCursor />
         <SpotlightEffect />
@@ -81,7 +53,7 @@ const AllProjects = () => {
         <div className="mx-auto max-w-6xl px-6 py-12 md:px-12 md:py-16">
           {/* Back Button */}
           <Link
-            to="/"
+            href="/"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -117,8 +89,8 @@ const AllProjects = () => {
             <div className="flex gap-2 pb-2">
               {categories.map((category) => {
                 const count = category.id === "all" 
-                  ? allProjects.length 
-                  : allProjects.filter(p => p.category === category.id).length;
+                  ? projects.length 
+                  : projects.filter(p => p.category === category.id).length;
                 
                 return (
                   <button
@@ -165,8 +137,7 @@ const AllProjects = () => {
           {/* Projects Grid */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredProjects.map((project, index) => {
-              const slug = getProjectSlug(project.title);
-              const status = getProjectStatus(project.title);
+              const { slug, status } = project;
               const hasDetailPage = !!slug;
 
               const CardContent = (
@@ -192,7 +163,7 @@ const AllProjects = () => {
                     )}
 
                     {/* Quick Action Icons */}
-                    <div className="absolute top-3 right-3 flex gap-2">
+                    <div className="absolute top-3 right-3 z-20 flex gap-2">
                       {project.github !== "#" && (
                         <a
                           href={project.github}
@@ -262,25 +233,19 @@ const AllProjects = () => {
                 </>
               );
 
-              if (hasDetailPage) {
-                return (
-                  <Link
-                    key={project.title}
-                    to={`/projects/${slug}`}
-                    className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300 animate-fade-in block"
-                    style={{ animationDelay: `${index * 50}ms` }}
-                  >
-                    {CardContent}
-                  </Link>
-                );
-              }
-
               return (
                 <div
                   key={project.title}
                   className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300 animate-fade-in"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
+                  {hasDetailPage && (
+                    <Link
+                      href={`/projects/${slug}`}
+                      aria-label={`View ${project.title}`}
+                      className="absolute inset-0 z-10"
+                    />
+                  )}
                   {CardContent}
                 </div>
               );

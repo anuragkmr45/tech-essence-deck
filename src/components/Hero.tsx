@@ -1,9 +1,9 @@
 import { Github, Linkedin, Twitter, Mail, FileText } from "lucide-react";
-import { personalInfo } from "@/data/portfolio";
+import type { HomeContent } from "@/lib/content/repository";
 import { Button } from "./ui/button";
 
 // Lightweight hero — no border cage, no mono labels, type does the work
-const Hero = () => {
+const Hero = ({ personalInfo }: Pick<HomeContent, "personalInfo">) => {
   const socialLinks = [
     { icon: Github, href: personalInfo.github, label: "Github" },
     { icon: Linkedin, href: personalInfo.linkedin, label: "LinkedIn" },

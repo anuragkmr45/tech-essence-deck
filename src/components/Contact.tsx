@@ -1,9 +1,11 @@
-import { personalInfo } from "@/data/portfolio";
-import { Mail, Github, Linkedin, Twitter, MapPin, Send } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+"use client";
 
-const Contact = () => {
+import { useState } from "react";
+import { Mail, Github, Linkedin, MapPin, Send } from "lucide-react";
+import { toast } from "sonner";
+import type { HomeContent } from "@/lib/content/repository";
+
+const Contact = ({ personalInfo }: Pick<HomeContent, "personalInfo">) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",

@@ -1,18 +1,13 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ArrowRight, FileText } from "lucide-react";
-import { caseStudyDetails } from "@/data/caseStudyDetails";
+import type { CaseStudyDetail } from "@/data/caseStudyDetails";
 
 interface RelatedCaseStudiesProps {
-  currentId: string;
+  caseStudies: CaseStudyDetail[];
 }
 
-const RelatedCaseStudies = ({ currentId }: RelatedCaseStudiesProps) => {
-  // Get other case studies (exclude current)
-  const otherCaseStudies = Object.values(caseStudyDetails)
-    .filter((cs) => cs.id !== currentId)
-    .slice(0, 3);
-
-  if (otherCaseStudies.length === 0) return null;
+const RelatedCaseStudies = ({ caseStudies }: RelatedCaseStudiesProps) => {
+  if (caseStudies.length === 0) return null;
 
   return (
     <section className="scroll-mt-24">
@@ -22,10 +17,10 @@ const RelatedCaseStudies = ({ currentId }: RelatedCaseStudiesProps) => {
       </h2>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {otherCaseStudies.map((caseStudy) => (
+        {caseStudies.map((caseStudy) => (
           <Link
             key={caseStudy.id}
-            to={`/case-study/${caseStudy.id}`}
+            href={`/case-study/${caseStudy.id}`}
             className="group relative bg-secondary/30 rounded-lg overflow-hidden border border-secondary/50 hover:border-primary/50 transition-all duration-300"
           >
             {caseStudy.coverImage && (

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ArticleDetail } from "@/data/articleDetails";
 
@@ -12,7 +12,7 @@ const ArticleNavigation = ({ prev, next }: ArticleNavigationProps) => {
     <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-secondary/50">
       {prev ? (
         <Link
-          to={`/article/${prev.id}`}
+          href={`/article/${prev.id}`}
           className="flex-1 group p-4 rounded-lg bg-secondary/30 border border-secondary/50 hover:border-primary/50 transition-all"
         >
           <div className="flex items-center gap-2 text-muted-foreground mb-2">
@@ -29,7 +29,7 @@ const ArticleNavigation = ({ prev, next }: ArticleNavigationProps) => {
 
       {next ? (
         <Link
-          to={`/article/${next.id}`}
+          href={`/article/${next.id}`}
           className="flex-1 group p-4 rounded-lg bg-secondary/30 border border-secondary/50 hover:border-primary/50 transition-all text-right"
         >
           <div className="flex items-center justify-end gap-2 text-muted-foreground mb-2">
